@@ -293,7 +293,7 @@ local function animate(isAlreadyLoaded, callback)
         -- Fill progress bar to 50%
         tween(progress, { Size = UDim2.new(0.5, 0, 1, 0) }, 0.8)
 
-        if keyVerified or game.Players.LocalPlayer.Name == "YournothimbuddyXD" or game.Players.LocalPlayer.Name == "328ml" or game.Players.LocalPlayer.Name == "ImOn_ValveIndex" or game.Players.LocalPlayer.Name == "GYATT_DAMN1" or game.Players.LocalPlayer.Name == "BloxiAstra" then
+        if keyVerified or game.Players.LocalPlayer.Name == "AGFCiO" then
             -- Skip key verification if key already exists and is valid
             task.wait(0.5)
             status.Text = "Loading AK Admin..."
@@ -320,10 +320,10 @@ local function animate(isAlreadyLoaded, callback)
             -- Handle Get Key button
             getKeyButton.MouseButton1Click:Connect(function()
                 sounds.buttonClick:Play()
-                setclipboard("https://discord.gg/sJ9pnVaX")
+                setclipboard("https://discord.gg/GDaAy38xWQ")
                 getKeyButton.Text = "Discord copied. (no ads)"
                 task.wait(3)
-                getKeyButton.Text = "Get Key"
+                getKeyButton.Text = "this shit dont work"
             end)
 
             -- Handle Submit button
