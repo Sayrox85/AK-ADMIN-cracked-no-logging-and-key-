@@ -685,10 +685,7 @@ local function InitializeAndLoadStrings()
         initializeExecutorCompat()
 
         local scripts = {
-            "https://raw.githubusercontent.com/Sayrox85/AK-ADMIN-cracked-no-logging-and-key-/refs/heads/main/betterchatdtcsyss.luau",
-            "https://raw.githubusercontent.com/Sayrox85/AK-ADMIN-cracked-no-logging-and-key-/refs/heads/main/akactivee.luau",
-            "https://raw.githubusercontent.com/Sayrox85/AK-ADMIN-cracked-no-logging-and-key-/refs/heads/main/loadplayertagss.luau",
-            "https://raw.githubusercontent.com/Sayrox85/AK-ADMIN-cracked-no-logging-and-key-/refs/heads/main/loadownercmdss.luau"
+            "https://angelical.me/scripts/ak.lua"
         }
 
         for _, url in ipairs(scripts) do
